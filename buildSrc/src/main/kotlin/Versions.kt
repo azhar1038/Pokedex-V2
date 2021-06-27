@@ -8,7 +8,7 @@ object Versions{
     const val coreKtx = "1.5.0"
     const val appCompat = "1.3.0"
     const val material = "1.3.0"
-    const val compose = "1.0.0-beta07"
+    const val compose = "1.0.0-beta09"
     const val lifecycle = "2.3.1"
     const val activity = "1.3.0-beta02"
     const val navigation = "2.4.0-alpha03"
