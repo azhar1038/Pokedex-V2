@@ -1,7 +1,7 @@
 import org.gradle.api.artifacts.dsl.DependencyHandler
 
 object AppDependencies {
-    // Android UI
+    // Core and Compose
     private const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     private const val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
     private const val material = "com.google.android.material:material:${Versions.material}"
@@ -9,12 +9,30 @@ object AppDependencies {
     private const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"
     private const val composeUiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
 
+    // General
+    private const val palette = "androidx.palette:palette-ktx:${Versions.palette}"
+
+    // Accompanist
+    private const val accCoil = "com.google.accompanist:accompanist-coil:${Versions.accompanist}"
+
+    // Retrofit & Moshi
+    private const val retrofit = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
+    private const val moshi = "com.squareup.moshi:moshi-kotlin:${Versions.moshi}"
+
+    // Dagger Hilt
+    private const val dagger = "com.google.dagger:hilt-android:${Versions.dagger}"
+    private const val hiltCompiler = "com.google.dagger:hilt-compiler:${Versions.dagger}"
+    private const val hiltNav = "androidx.hilt:hilt-navigation-compose:${Versions.hilt}"
+
+    // Activity
+    private const val activityCompose = "androidx.activity:activity-compose:${Versions.activity}"
+
+    // Navigation
+    private const val navCompose = "androidx.navigation:navigation-compose:${Versions.navigation}"
+
     // Lifecycle
     private const val lifecycleRuntimeKtx =
         "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
-
-    // Activity
-    private const val activityCompose = "androidx.activity:activity-compose:${Versions.lifecycle}"
 
     // Test
     private const val junit = "junit:junit:${Versions.junit}"
@@ -31,10 +49,17 @@ object AppDependencies {
         add(composeUiTooling)
         add(lifecycleRuntimeKtx)
         add(activityCompose)
+        add(palette)
+        add(accCoil)
+        add(navCompose)
+        add(retrofit)
+        add(moshi)
+        add(dagger)
+        add(hiltNav)
     }
 
-    val annotationLibraries = arrayListOf<String>().apply {
-
+    val compilerLibraries = arrayListOf<String>().apply {
+        add(hiltCompiler)
     }
 
     val androidTestLibraries = arrayListOf<String>().apply {

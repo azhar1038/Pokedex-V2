@@ -1,10 +1,13 @@
 import AppDependencies.implementation
 import AppDependencies.testImplementation
 import AppDependencies.androidTestImplementation
+import AppDependencies.kapt
 
 plugins {
     id("com.android.application")
     kotlin("android")
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -50,6 +53,7 @@ android {
 
 dependencies {
     implementation(AppDependencies.appLibraries)
+    kapt(AppDependencies.compilerLibraries)
     testImplementation(AppDependencies.testLibraries)
     androidTestImplementation(AppDependencies.androidTestLibraries)
 }
