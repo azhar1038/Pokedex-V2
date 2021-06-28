@@ -24,6 +24,10 @@ object AppDependencies {
     private const val hiltCompiler = "com.google.dagger:hilt-compiler:${Versions.dagger}"
     private const val hiltNav = "androidx.hilt:hilt-navigation-compose:${Versions.hilt}"
 
+    // Room
+    private const val roomRuntime = "androidx.room:room-runtime:${Versions.room}"
+    private const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
+
     // Activity
     private const val activityCompose = "androidx.activity:activity-compose:${Versions.activity}"
 
@@ -56,10 +60,12 @@ object AppDependencies {
         add(moshi)
         add(dagger)
         add(hiltNav)
+        add(roomRuntime)
     }
 
     val compilerLibraries = arrayListOf<String>().apply {
         add(hiltCompiler)
+        add(roomCompiler)
     }
 
     val androidTestLibraries = arrayListOf<String>().apply {

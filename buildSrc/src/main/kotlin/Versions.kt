@@ -18,6 +18,7 @@ object Versions{
     const val moshi = "1.12.0"
     const val palette = "1.0.0"
     const val accompanist = "0.12.0"
+    const val room = "2.3.0"
 
     // Test
     const val junit = "4.12"
