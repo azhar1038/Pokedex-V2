@@ -8,6 +8,7 @@ object AppDependencies {
     private const val composeUi = "androidx.compose.ui:ui:${Versions.compose}"
     private const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"
     private const val composeUiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
+    private const val composeLiveData = "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
 
     // General
     private const val palette = "androidx.palette:palette-ktx:${Versions.palette}"
@@ -61,6 +62,7 @@ object AppDependencies {
         add(dagger)
         add(hiltNav)
         add(roomRuntime)
+        add(composeLiveData)
     }
 
     val compilerLibraries = arrayListOf<String>().apply {
