@@ -14,7 +14,6 @@ interface PokemonDao {
     @Insert
     fun insertAll(pokemons: List<PokemonProfile>)
 
-    @Query("SELECT * from pokemon_list")
+    @Query("SELECT * FROM pokemon_list")
     fun getAll(): LiveData<List<PokemonProfile>>
-
 }
