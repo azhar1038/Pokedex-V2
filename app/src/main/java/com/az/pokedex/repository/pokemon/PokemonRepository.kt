@@ -1,16 +1,24 @@
 package com.az.pokedex.repository.pokemon
 
+import androidx.lifecycle.LiveData
+import com.az.pokedex.model.PokemonProfile
 import com.az.pokedex.model.remote.ResponsePokemon
 import com.az.pokedex.model.remote.ResponsePokemonList
 import com.az.pokedex.utils.Resource
 
 interface PokemonRepository {
-    suspend fun getPokemonCount(): Resource<Int>
+//    val pokemonList: LiveData<Resource<List<PokemonProfile>>>
 
-    suspend fun getPokemonList(
-        limit: Int,
-        offset: Int,
-    ): Resource<ResponsePokemonList>
+//    suspend fun getPokemonCount(): Resource<Int>
+//
+//    suspend fun getPokemonList(
+//        limit: Int,
+//        offset: Int,
+//    ): Resource<ResponsePokemonList>
+
+    fun getPokemonList(): LiveData<List<PokemonProfile>>
+
+    suspend fun refreshPokemonList()
 
     suspend fun getPokemonInfo(
         pokemonName: String,
