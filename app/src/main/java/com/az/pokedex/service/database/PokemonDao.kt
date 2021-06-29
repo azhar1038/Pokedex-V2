@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.az.pokedex.model.PokemonProfile
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PokemonDao {
@@ -15,5 +16,5 @@ interface PokemonDao {
     fun insertAll(pokemons: List<PokemonProfile>)
 
     @Query("SELECT * FROM pokemon_list")
-    fun getAll(): LiveData<List<PokemonProfile>>
+    fun getAll(): Flow<List<PokemonProfile>>
 }

@@ -10,6 +10,7 @@ import com.az.pokedex.service.PokeApi
 import com.az.pokedex.service.database.PokemonDao
 import com.az.pokedex.utils.Resource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 import javax.inject.Inject
@@ -40,7 +41,7 @@ class DefaultPokemonRepository @Inject constructor(
 //        return Resource.Success(response)
 //    }
 
-    override fun getPokemonList(): LiveData<List<PokemonProfile>> {
+    override fun getPokemonList(): Flow<List<PokemonProfile>> {
         return pokemonDao.getAll()
     }
 
