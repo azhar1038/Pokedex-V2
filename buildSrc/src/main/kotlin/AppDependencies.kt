@@ -8,13 +8,16 @@ object AppDependencies {
     private const val composeUi = "androidx.compose.ui:ui:${Versions.compose}"
     private const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"
     private const val composeUiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
-    private const val composeLiveData = "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
+    private const val composeLiveData =
+        "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
 
     // General
     private const val palette = "androidx.palette:palette-ktx:${Versions.palette}"
 
     // Accompanist
     private const val accCoil = "com.google.accompanist:accompanist-coil:${Versions.accompanist}"
+    private const val accSys =
+        "com.google.accompanist:accompanist-systemuicontroller:${Versions.accompanist}"
 
     // Retrofit & Moshi
     private const val retrofit = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
@@ -65,6 +68,7 @@ object AppDependencies {
         add(roomKtx)
         add(roomRuntime)
         add(composeLiveData)
+        add(accSys)
     }
 
     val compilerLibraries = arrayListOf<String>().apply {

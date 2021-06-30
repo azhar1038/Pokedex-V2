@@ -1,18 +1,19 @@
 package com.az.pokedex.ui.view.pokemonlist
 
-import android.graphics.drawable.Drawable
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.request.ImageRequest
-import com.az.pokedex.model.PokemonProfile
+import com.az.pokedex.R
 import kotlin.math.ceil
 
 @Composable
@@ -21,12 +22,18 @@ fun PokemonListView(
 ) {
     val context = LocalContext.current
 
+    val scrollState = rememberLazyListState()
+
     Column {
-        TopBar(searchHint = "Search among ${viewModel.pokemonList.value.size} pokemons"){
+        TopBar(
+            searchHint = "Search among ${viewModel.pokemonList.value.size} pokemons",
+        ){
             viewModel.search(it)
         }
         if (viewModel.filterList.value.isNotEmpty()) {
-            LazyColumn {
+            LazyColumn(
+                state = scrollState
+            ) {
                 items(ceil(viewModel.filterList.value.size / 2.0f).toInt()) { index ->
                     val firstIndex: Int = index * 2
                     val secondIndex: Int = index * 2 + 1
@@ -67,6 +74,27 @@ fun PokemonListView(
 
                     }
 
+                }
+            }
+        }else{
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
+                    Icon(
+                        painter = painterResource(R.drawable.ic_pokeball),
+                        tint = Color(0xffdddddd),
+                        contentDescription = null,
+                        modifier = Modifier.size(100.dp)
+                    )
+                    Spacer(Modifier.height(24.dp))
+                    Text(
+                        "No pokemon found",
+                        color = Color.LightGray
+                    )
                 }
             }
         }

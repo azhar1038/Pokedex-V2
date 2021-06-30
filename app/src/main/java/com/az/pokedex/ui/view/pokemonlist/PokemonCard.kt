@@ -58,7 +58,7 @@ fun PokemonCard(
             .fillMaxWidth()
             .height(110.dp)
             .padding(8.dp)
-            .clip(RoundedCornerShape(8.dp))
+            .clip(RoundedCornerShape(12.dp))
             .background(
                 Brush.verticalGradient(
                     listOf(
