@@ -35,14 +35,20 @@ import kotlin.math.ceil
 fun PokemonListView(
     viewModel: PokemonListViewModel = hiltViewModel()
 ) {
-    val pokemonList: List<PokemonProfile> by viewModel.filteredPokemonList.collectAsState(initial = listOf())
-    if (pokemonList.isNotEmpty()) {
-        LazyColumn {
-            items(ceil(pokemonList.size / 2.0f).toInt()) { index ->
-                PokemonRow(
-                    pokemonOne = pokemonList[index * 2],
-                    pokemonTwo = pokemonList[index * 2 + 1]
-                )
+    val pokemonList: List<PokemonProfile> by viewModel.pokemonList.collectAsState(listOf())
+
+    Column {
+        TopBar(searchHint = "Search"){
+            viewModel.search(it)
+        }
+        if (pokemonList.isNotEmpty()) {
+            LazyColumn {
+                items(ceil(pokemonList.size / 2.0f).toInt()) { index ->
+                    PokemonRow(
+                        pokemonOne = pokemonList[index * 2],
+                        pokemonTwo = pokemonList[index * 2 + 1]
+                    )
+                }
             }
         }
     }

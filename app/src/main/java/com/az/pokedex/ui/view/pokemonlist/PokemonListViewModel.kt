@@ -26,15 +26,13 @@ import javax.inject.Inject
 class PokemonListViewModel @Inject constructor(
     pokemonRepository: PokemonRepository
 ) : ViewModel() {
-    private val _pokemonList: Flow<List<PokemonProfile>> = pokemonRepository.getPokemonList()
+    val pokemonList: Flow<List<PokemonProfile>> = pokemonRepository.getPokemonList()
+
     private val _searchText = MutableLiveData("")
 
-    val searchText: LiveData<String>
-        get() = _searchText
-
-    val filteredPokemonList = _pokemonList.map {
+    var filteredPokemonList = pokemonList.map {
         it.filter { pokemon ->
-            pokemon.name.lowercase().contains(searchText.value.toString())
+            pokemon.name.lowercase().contains(_searchText.value.toString())
         }
     }
 
@@ -42,6 +40,10 @@ class PokemonListViewModel @Inject constructor(
         viewModelScope.launch {
             pokemonRepository.refreshPokemonList()
         }
+    }
+
+    fun search(text: String){
+        _searchText.value = text
     }
 
     suspend fun getDrawable(request: ImageRequest): Drawable?{
