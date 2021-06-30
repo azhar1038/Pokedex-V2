@@ -1,24 +1,24 @@
 package com.az.pokedex.ui.view.pokemonlist
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.util.Log
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
 import coil.Coil
 import coil.request.ImageRequest
 import coil.request.SuccessResult
+import com.az.pokedex.model.DominantColor
 import com.az.pokedex.model.PokemonProfile
 import com.az.pokedex.repository.pokemon.PokemonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,46 +26,61 @@ import javax.inject.Inject
 class PokemonListViewModel @Inject constructor(
     pokemonRepository: PokemonRepository
 ) : ViewModel() {
-    val pokemonList: Flow<List<PokemonProfile>> = pokemonRepository.getPokemonList()
+    private val _pokemonList: Flow<List<PokemonProfile>> = pokemonRepository.getPokemonList()
 
-    private val _searchText = MutableLiveData("")
-
-    var filteredPokemonList = pokemonList.map {
-        it.filter { pokemon ->
-            pokemon.name.lowercase().contains(_searchText.value.toString())
-        }
-    }
+    val pokemonList = mutableStateOf<List<PokemonProfile>>(listOf())
+    val filterList = mutableStateOf<List<Int>>(listOf())
+    var dominantColor = listOf<MutableState<DominantColor?>>()
 
     init {
         viewModelScope.launch {
+            _pokemonList.collect {
+                pokemonList.value = it
+                filterList.value = (pokemonList.value.indices).toList()
+                dominantColor = pokemonList.value.map { mutableStateOf(null) }
+            }
             pokemonRepository.refreshPokemonList()
         }
     }
 
     fun search(text: String){
-        _searchText.value = text
+        val match = text.lowercase()
+        val newFilter = mutableListOf<Int>()
+        pokemonList.value.forEachIndexed{ index, pokemon ->
+            if(pokemon.name.contains(match)){
+                newFilter.add(index)
+            }
+        }
+        filterList.value = newFilter
     }
 
-    suspend fun getDrawable(request: ImageRequest): Drawable?{
-        return when(val result = Coil.execute(request)){
+    suspend fun calculateDominantColor(context: Context, index: Int) {
+        if(dominantColor[index].value != null) return
+
+        val request = ImageRequest.Builder(context)
+            .data(pokemonList.value[index].imageUrl)
+            .build()
+
+        val d: Drawable? = when(val result = Coil.execute(request)){
             is SuccessResult -> result.drawable
             else -> null
         }
-    }
 
-    fun calculateDominantColor(
-        drawable: Drawable,
-        onFinish: (Color) -> Unit
-    ) {
-        val bmp = (drawable as BitmapDrawable).bitmap.copy(
-            Bitmap.Config.ARGB_8888,
-            true
-        )
+        d?.let {
+            val bmp = (d as BitmapDrawable).bitmap.copy(
+                Bitmap.Config.ARGB_8888,
+                true
+            )
 
-        Palette.from(bmp).generate { palette ->
-            palette?.dominantSwatch?.rgb?.let { color ->
-                onFinish(Color(color))
+            Palette.from(bmp).generate { palette ->
+                palette?.dominantSwatch?.let {
+                    dominantColor[index].value = DominantColor(
+                        Color(it.rgb),
+                        Color(it.bodyTextColor)
+                    )
+                }
             }
         }
+
     }
 }

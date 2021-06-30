@@ -7,23 +7,23 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.*
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,7 +39,7 @@ fun TopBar(
     }
 
     val titleAlpha: Float by animateFloatAsState(
-        if(isSearchActive) 0f else 1f,
+        if (isSearchActive) 0f else 1f,
         animationSpec = tween(
             durationMillis = 400,
             easing = LinearOutSlowInEasing,
@@ -47,7 +47,7 @@ fun TopBar(
     )
 
     val searchIconOffsetX by animateDpAsState(
-        if(isSearchActive) (-16).dp else 0.dp
+        if (isSearchActive) (-16).dp else 0.dp
     )
 
     var searchText: String by remember {
@@ -60,35 +60,42 @@ fun TopBar(
             .height(80.dp)
             .background(MaterialTheme.colors.surface)
             .padding(8.dp)
-    ){
+    ) {
         Text(
             "Pokedex",
-            fontSize = 32.sp,
+            fontSize = 28.sp,
             color = MaterialTheme.colors.onSurface,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
-                .align(Alignment.Center)
+                .align(Alignment.CenterStart)
+                .padding(start = 16.dp)
                 .alpha(titleAlpha)
         )
         Box(
             modifier = Modifier
-                .fillMaxWidth(1-titleAlpha)
+                .fillMaxWidth(1 - titleAlpha)
                 .padding(horizontal = 16.dp)
                 .align(Alignment.CenterEnd)
-                .alpha(1-titleAlpha)
-        ){
+                .alpha(1 - titleAlpha)
+        ) {
             BasicTextField(
                 value = searchText,
                 onValueChange = {
                     searchText = it
                     onChange(it)
                 },
+                textStyle = TextStyle(
+                    fontSize = 16.sp
+                ),
                 enabled = isSearchActive,
                 maxLines = 1,
                 singleLine = true,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.LightGray, shape = CircleShape)
+                    .background(Color(0xffeeeeee), shape = CircleShape)
                     .padding(
                         start = 20.dp,
                         top = 16.dp,
@@ -96,9 +103,11 @@ fun TopBar(
                         end = 50.dp
                     )
             )
-            if(isSearchActive){
+            if (isSearchActive) {
                 Text(
-                    text = if(searchText.isEmpty()) searchHint else "",
+                    text = if (searchText.isEmpty()) searchHint else "",
+                    fontSize = 14.sp,
+                    color = Color.Gray,
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(start = 20.dp)
@@ -107,13 +116,19 @@ fun TopBar(
         }
 
         IconButton(
-            onClick = { isSearchActive = !isSearchActive },
+            onClick = {
+                if(isSearchActive){
+                    searchText = ""
+                    onChange("")
+                }
+                isSearchActive = !isSearchActive
+            },
             modifier = Modifier
                 .align(Alignment.CenterEnd)
                 .offset(x = searchIconOffsetX)
         ) {
             Icon(
-                if(!isSearchActive) Icons.Filled.Search else Icons.Filled.Clear,
+                if (!isSearchActive) Icons.Filled.Search else Icons.Filled.Clear,
                 contentDescription = "Search button"
             )
         }
