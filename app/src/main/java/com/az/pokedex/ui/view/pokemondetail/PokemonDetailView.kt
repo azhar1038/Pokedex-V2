@@ -6,10 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
@@ -59,7 +56,7 @@ fun PokemonDetailView(
             modifier = Modifier
                 .size(250.dp)
                 .align(Alignment.TopEnd)
-                .offset(40.dp, (-30).dp)
+                .offset(40.dp, (50).dp)
         )
         when(pokemon){
             is Resource.Success -> {
@@ -73,7 +70,10 @@ fun PokemonDetailView(
                 Text("Error")
             }
             is Resource.Loading -> {
-                CircularProgressIndicator()
+                CircularProgressIndicator(
+                    color = Color(dominantOnColor),
+                    modifier = Modifier.align(Alignment.Center)
+                )
             }
         }
     }
@@ -87,41 +87,48 @@ fun PokemonDetail(
 ) {
     Box{
         Column{
-            Box(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(300.dp)
+                    .padding(24.dp)
             ){
-                Column(
-                    modifier = Modifier
-                        .padding(24.dp)
-                ){
+                Row(
+                    verticalAlignment = Alignment.Top
+                ) {
                     Text(
                         parsePokemonName(pokemon.name),
                         fontSize = 32.sp,
                         color = onBackground,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.weight(1f)
                     )
-                    Spacer(Modifier.height(8.dp))
-                    pokemon.types.forEach { type ->
-                        Box(
-                            contentAlignment = Alignment.Center,
-                            modifier = Modifier
-                                .padding(vertical = 4.dp)
-                                .height(30.dp)
-                                .width(100.dp)
-                                .background(
-                                    onBackground.copy(0.2f),
-                                    shape = CircleShape
-                                )
-                        ){
-                            Text(
-                                type.type.name.replaceFirstChar { it.uppercaseChar() },
-                                color = onBackground,
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold
+                    Text(
+                        "#${pokemon.id}",
+                        fontSize = 20.sp,
+                        color = onBackground,
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
+                Spacer(Modifier.height(8.dp))
+                pokemon.types.forEach { type ->
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .padding(vertical = 4.dp)
+                            .height(30.dp)
+                            .width(100.dp)
+                            .background(
+                                onBackground.copy(0.2f),
+                                shape = CircleShape
                             )
-                        }
+                    ){
+                        Text(
+                            type.type.name.replaceFirstChar { it.uppercaseChar() },
+                            color = onBackground,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold
+                        )
                     }
                 }
             }
@@ -136,7 +143,12 @@ fun PokemonDetail(
                             topEnd = 24.dp
                         )
                     )
-            ){}
+            ){
+                Column{
+                    Spacer(Modifier.height(40.dp))
+                    DetailTabs(pokemon)
+                }
+            }
         }
         Image(
             painter = rememberCoilPainter(
