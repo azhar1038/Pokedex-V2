@@ -7,23 +7,23 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class ResponseSprites(
     @Json(name = "back_default")
-    val backDefault: String,
+    val backDefault: String?,
     @Json(name = "back_female")
-    val backFemale: Any?,
+    val backFemale: String?,
     @Json(name = "back_shiny")
-    val backShiny: String,
+    val backShiny: String?,
     @Json(name = "back_shiny_female")
-    val backShinyFemale: Any?,
+    val backShinyFemale: String?,
     @Json(name = "front_default")
-    val frontDefault: String,
+    val frontDefault: String?,
     @Json(name = "front_female")
-    val frontFemale: Any?,
+    val frontFemale: String?,
     @Json(name = "front_shiny")
-    val frontShiny: String,
+    val frontShiny: String?,
     @Json(name = "front_shiny_female")
-    val frontShinyFemale: Any?,
+    val frontShinyFemale: String?,
     @Json(name = "other")
     val other: ResponseOther,
     @Json(name = "versions")
-    val versions: ResponseVersions
+    val versions: Any?
 )

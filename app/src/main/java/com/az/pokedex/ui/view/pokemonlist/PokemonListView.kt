@@ -5,7 +5,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -13,11 +14,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.az.pokedex.R
 import kotlin.math.ceil
 
 @Composable
 fun PokemonListView(
+    navController: NavController,
     viewModel: PokemonListViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -27,7 +30,7 @@ fun PokemonListView(
     Column {
         TopBar(
             searchHint = "Search among ${viewModel.pokemonList.value.size} pokemons",
-        ){
+        ) {
             viewModel.search(it)
         }
         if (viewModel.filterList.value.isNotEmpty()) {
@@ -39,36 +42,48 @@ fun PokemonListView(
                     val secondIndex: Int = index * 2 + 1
                     val first: Int = viewModel.filterList.value[firstIndex]
                     var second: Int? = null
-                    if(secondIndex < viewModel.filterList.value.size){
+                    if (secondIndex < viewModel.filterList.value.size) {
                         second = viewModel.filterList.value[secondIndex]
                     }
                     LaunchedEffect(first) {
                         viewModel.calculateDominantColor(context, first)
                     }
                     second?.let {
-                        LaunchedEffect(second){
+                        LaunchedEffect(second) {
                             viewModel.calculateDominantColor(context, second)
                         }
                     }
                     Row(
                         modifier = Modifier.padding(horizontal = 8.dp)
                     ) {
+                        val pokemonOne = viewModel.pokemonList.value[first]
+                        val dcOne = viewModel.dominantColor[first].value
                         PokemonCard(
-                            pokemon = viewModel.pokemonList.value[first],
-                            dominantColor = viewModel.dominantColor[first].value,
+                            pokemon = pokemonOne,
+                            dominantColor = dcOne,
                             modifier = Modifier.weight(1f)
                         ) {
-                            //TODO: Navigate to detail page
+                            val bg: Int = dcOne?.background ?: 1
+                            val onBg: Int = dcOne?.onBackground ?: 0
+                            navController.navigate(
+                                "/pokemon_detail/${pokemonOne.id}/$bg/$onBg"
+                            )
                         }
-                        if(second != null){
+                        if (second != null) {
+                            val pokemonTwo = viewModel.pokemonList.value[second]
+                            val dcTwo = viewModel.dominantColor[second].value
                             PokemonCard(
-                                pokemon = viewModel.pokemonList.value[second],
-                                dominantColor = viewModel.dominantColor[second].value,
+                                pokemon = pokemonTwo,
+                                dominantColor = dcTwo,
                                 modifier = Modifier.weight(1f)
                             ) {
-                                //TODO: Navigate to detail page
+                                val bg: Int = dcTwo?.background ?: 1
+                                val onBg: Int = dcTwo?.onBackground ?: 0
+                                navController.navigate(
+                                    "/pokemon_detail/${pokemonTwo.id}/$bg/$onBg"
+                                )
                             }
-                        }else{
+                        } else {
                             Spacer(Modifier.weight(1f))
                         }
 
@@ -76,14 +91,14 @@ fun PokemonListView(
 
                 }
             }
-        }else{
+        } else {
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier.fillMaxSize()
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
-                ){
+                ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_pokeball),
                         tint = Color(0xffdddddd),

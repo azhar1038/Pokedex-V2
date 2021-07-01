@@ -9,31 +9,31 @@ data class ResponsePokemon(
     @Json(name = "abilities")
     val abilities: List<ResponseAbility>,
     @Json(name = "base_experience")
-    val baseExperience: Int,
+    val baseExperience: Int?,
     @Json(name = "forms")
-    val forms: List<ResponseForm>,
+    val forms: Any?,
     @Json(name = "game_indices")
-    val gameIndices: List<Any>,
+    val gameIndices: Any?,
     @Json(name = "height")
     val height: Int,
     @Json(name = "held_items")
-    val heldItems: List<Any>,
+    val heldItems: Any?,
     @Json(name = "id")
     val id: Int,
     @Json(name = "is_default")
-    val isDefault: Boolean,
+    val isDefault: Boolean?,
     @Json(name = "location_area_encounters")
-    val locationAreaEncounters: String,
+    val locationAreaEncounters: String?,
     @Json(name = "moves")
     val moves: List<ResponseMove>,
     @Json(name = "name")
     val name: String,
     @Json(name = "order")
-    val order: Int,
+    val order: Int?,
     @Json(name = "past_types")
-    val pastTypes: List<Any>,
+    val pastTypes: Any?,
     @Json(name = "species")
-    val species: ResponseSpecies,
+    val species: Any?,
     @Json(name = "sprites")
     val sprites: ResponseSprites,
     @Json(name = "stats")

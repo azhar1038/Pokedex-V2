@@ -3,6 +3,6 @@ package com.az.pokedex.model
 import androidx.compose.ui.graphics.Color
 
 data class DominantColor(
-    var background: Color = Color.LightGray,
-    var onBackground: Color = Color.Black
+    var background: Int = 1,
+    var onBackground: Int = 0
 )

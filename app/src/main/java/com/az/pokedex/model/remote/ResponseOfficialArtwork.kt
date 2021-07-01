@@ -7,5 +7,5 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class ResponseOfficialArtwork(
     @Json(name = "front_default")
-    val frontDefault: String
+    val frontDefault: String?
 )

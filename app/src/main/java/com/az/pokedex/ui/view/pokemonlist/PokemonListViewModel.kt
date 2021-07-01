@@ -75,8 +75,8 @@ class PokemonListViewModel @Inject constructor(
             Palette.from(bmp).generate { palette ->
                 palette?.dominantSwatch?.let {
                     dominantColor[index].value = DominantColor(
-                        Color(it.rgb),
-                        Color(it.bodyTextColor)
+                        it.rgb,
+                        it.bodyTextColor
                     )
                 }
             }

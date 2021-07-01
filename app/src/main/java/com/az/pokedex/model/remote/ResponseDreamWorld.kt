@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class ResponseDreamWorld(
     @Json(name = "front_default")
-    val frontDefault: Any?,
+    val frontDefault: String?,
     @Json(name = "front_female")
-    val frontFemale: Any?
+    val frontFemale: String?
 )

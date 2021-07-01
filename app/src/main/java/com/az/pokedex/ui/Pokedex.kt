@@ -21,19 +21,21 @@ fun Pokedex() {
         composable(
             route = "/pokemon_list"
         ){
-            PokemonListView()
+            PokemonListView(navController)
         }
 
         composable(
-            route = "/pokemon_detail/{pokemonId}/{dominantColor}",
+            route = "/pokemon_detail/{pokemonId}/{dominantColor}/{dominantOnColor}",
             arguments = listOf(
                 navArgument("pokemonId"){ type = NavType.LongType },
                 navArgument("dominantColor"){ type = NavType.IntType },
+                navArgument("dominantOnColor"){ type = NavType.IntType },
             )
         ){
             val pokemonId: Long = it.arguments?.getLong("pokemonId") ?: 1
             val dominantColor: Int = it.arguments?.getInt("dominantColor") ?: 0
-            PokemonDetailView(pokemonId, dominantColor)
+            val dominantOnColor: Int = it.arguments?.getInt("dominantOnColor") ?: 0
+            PokemonDetailView(pokemonId, dominantColor, dominantOnColor)
         }
     }
 }
