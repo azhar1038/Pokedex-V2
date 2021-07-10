@@ -30,6 +30,8 @@ fun PokemonListView(
     Column {
         TopBar(
             searchHint = "Search among ${viewModel.pokemonList.value.size} pokemons",
+            initialSearchText = viewModel.searchText.value,
+            initiallyActive = viewModel.searchActive.value
         ) {
             viewModel.search(it)
         }

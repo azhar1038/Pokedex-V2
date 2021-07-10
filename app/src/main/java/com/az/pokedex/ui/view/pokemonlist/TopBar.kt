@@ -32,10 +32,12 @@ import androidx.compose.ui.unit.sp
 fun TopBar(
     searchHint: String,
     modifier: Modifier = Modifier,
+    initialSearchText: String = "",
+    initiallyActive: Boolean = false,
     onChange: (String) -> Unit = {}
 ) {
     var isSearchActive by remember {
-        mutableStateOf(false)
+        mutableStateOf(initiallyActive)
     }
 
     val titleAlpha: Float by animateFloatAsState(
@@ -51,7 +53,7 @@ fun TopBar(
     )
 
     var searchText: String by remember {
-        mutableStateOf("")
+        mutableStateOf(initialSearchText)
     }
 
     Box(

@@ -32,6 +32,9 @@ class PokemonListViewModel @Inject constructor(
     val filterList = mutableStateOf<List<Int>>(listOf())
     var dominantColor = listOf<MutableState<DominantColor?>>()
 
+    var searchText = mutableStateOf("")
+    var searchActive = mutableStateOf(false)
+
     init {
         viewModelScope.launch {
             _pokemonList.collect {
@@ -45,6 +48,8 @@ class PokemonListViewModel @Inject constructor(
 
     fun search(text: String){
         val match = text.lowercase()
+        searchText.value = match
+        searchActive.value = match.isNotEmpty()
         val newFilter = mutableListOf<Int>()
         pokemonList.value.forEachIndexed{ index, pokemon ->
             if(pokemon.name.contains(match)){
