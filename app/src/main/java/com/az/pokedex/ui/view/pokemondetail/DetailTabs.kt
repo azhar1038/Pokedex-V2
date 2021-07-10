@@ -1,24 +1,37 @@
 package com.az.pokedex.ui.view.pokemondetail
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ScrollableTabRow
+import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.composed
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.az.pokedex.model.remote.ResponsePokemon
+
+inline fun Modifier.noRippleClickable(
+    crossinline onClick: () -> Unit,
+): Modifier = composed {
+    clickable(
+        indication = null,
+        interactionSource = remember {
+            MutableInteractionSource()
+        }
+    ) {
+        onClick()
+    }
+}
 
 @Composable
 fun DetailTabs(
@@ -30,8 +43,8 @@ fun DetailTabs(
     }
 
     val tabNames = listOf(
-        "About",
         "Base Stats",
+        "About",
         "Abilities",
         "Moves"
     )
@@ -42,6 +55,7 @@ fun DetailTabs(
             backgroundColor = MaterialTheme.colors.surface,
             contentColor = MaterialTheme.colors.onSurface,
             divider = {},
+            edgePadding = 12.dp,
             indicator = {
                 TabRowDefaults.Indicator(
                     color = MaterialTheme.colors.onSurface,
@@ -50,14 +64,12 @@ fun DetailTabs(
                         .padding(horizontal = 24.dp)
                 )
             },
-            modifier = Modifier.padding(horizontal = 24.dp),
-
         ) {
             tabNames.forEachIndexed { index, name ->
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
-                        .clickable {
+                        .noRippleClickable {
                             tabIndex = index
                         }
                         .padding(vertical = 8.dp)
@@ -65,18 +77,18 @@ fun DetailTabs(
                     Text(
                         name,
                         textAlign = TextAlign.Center,
-                        fontWeight = if(index == tabIndex) FontWeight.Bold else FontWeight.Normal,
+                        fontWeight = if (index == tabIndex) FontWeight.Bold else FontWeight.Normal,
                         fontSize = 14.sp,
                     )
                 }
             }
         }
         when (tabIndex) {
-            0 -> About(pokemon, modifier)
-            1 -> BaseStats(pokemon, modifier)
+            0 -> BaseStats(pokemon, modifier)
+            1 -> About(pokemon, modifier)
             2 -> Abilities(pokemon, modifier)
             3 -> Moves(pokemon, modifier)
-            else -> About(pokemon, modifier)
+            else -> BaseStats(pokemon, modifier)
         }
     }
 }

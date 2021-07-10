@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.az.pokedex.R
 import com.az.pokedex.model.DominantColor
 import com.az.pokedex.model.PokemonProfile
-import com.az.pokedex.utils.parsePokemonName
+import com.az.pokedex.utils.parseName
 import com.google.accompanist.coil.rememberCoilPainter
 
 @Composable
@@ -101,7 +101,7 @@ fun PokemonCard(
             modifier = Modifier.fillMaxHeight()
         ) {
             Text(
-                parsePokemonName(pokemon.name),
+                parseName(pokemon.name),
                 color = onBackground,
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,

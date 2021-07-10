@@ -24,7 +24,7 @@ import com.az.pokedex.model.remote.ResponsePokemon
 import com.az.pokedex.R
 import com.az.pokedex.repository.pokemon.PokemonRepository
 import com.az.pokedex.utils.Resource
-import com.az.pokedex.utils.parsePokemonName
+import com.az.pokedex.utils.parseName
 import com.google.accompanist.coil.rememberCoilPainter
 
 @Composable
@@ -97,7 +97,7 @@ fun PokemonDetail(
                     verticalAlignment = Alignment.Top
                 ) {
                     Text(
-                        parsePokemonName(pokemon.name),
+                        parseName(pokemon.name),
                         fontSize = 32.sp,
                         color = onBackground,
                         fontWeight = FontWeight.Bold,
