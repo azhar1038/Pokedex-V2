@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -36,12 +37,12 @@ class PokemonListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            pokemonRepository.refreshPokemonList()
             _pokemonList.collect {
                 pokemonList.value = it
                 filterList.value = (pokemonList.value.indices).toList()
                 dominantColor = pokemonList.value.map { mutableStateOf(null) }
             }
-            pokemonRepository.refreshPokemonList()
         }
     }
 

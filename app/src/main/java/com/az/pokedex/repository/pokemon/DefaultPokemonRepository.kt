@@ -20,27 +20,6 @@ class DefaultPokemonRepository @Inject constructor(
     private val pokemonDao: PokemonDao,
 ): PokemonRepository {
 
-//    override suspend fun getPokemonCount(): Resource<Int> {
-//        val localCount: Int = pokemonDao.count()?:0
-//        val remoteCount = try{
-//            val response = pokeApi.getPokemonList(1, 0)
-//            response.count
-//        }catch(e: Exception){
-////            return Resource.Error("Something went wrong!")
-//            localCount
-//        }
-//        return Resource.Success(remoteCount)
-//    }
-//
-//    override suspend fun getPokemonList(limit: Int, offset: Int): Resource<ResponsePokemonList> {
-//        val response = try{
-//            pokeApi.getPokemonList(limit, offset)
-//        }catch(e: Exception){
-//            return Resource.Error("Something went wrong!")
-//        }
-//        return Resource.Success(response)
-//    }
-
     override fun getPokemonList(): Flow<List<PokemonProfile>> {
         return pokemonDao.getAll()
     }
