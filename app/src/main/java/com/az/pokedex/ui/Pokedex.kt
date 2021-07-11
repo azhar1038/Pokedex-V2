@@ -9,7 +9,9 @@ import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.az.pokedex.ui.view.pokemondetail.PokemonDetailView
 import com.az.pokedex.ui.view.pokemonlist.PokemonListView
+import com.google.accompanist.pager.ExperimentalPagerApi
 
+@ExperimentalPagerApi
 @Composable
 fun Pokedex() {
     val navController: NavHostController = rememberNavController()

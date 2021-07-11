@@ -23,7 +23,9 @@ import com.az.pokedex.utils.Resource
 import com.az.pokedex.utils.parseName
 import com.google.accompanist.coil.rememberCoilPainter
 import com.google.accompanist.insets.systemBarsPadding
+import com.google.accompanist.pager.ExperimentalPagerApi
 
+@ExperimentalPagerApi
 @Composable
 fun PokemonDetailView(
     pokemonId: Long,
@@ -81,6 +83,7 @@ fun PokemonDetailView(
     }
 }
 
+@ExperimentalPagerApi
 @Composable
 fun PokemonDetail(
     pokemon: ResponsePokemon,

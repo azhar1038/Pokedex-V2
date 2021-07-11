@@ -20,6 +20,9 @@ object AppDependencies {
         "com.google.accompanist:accompanist-systemuicontroller:${Versions.accompanist}"
     private const val accInsets =
         "com.google.accompanist:accompanist-insets:${Versions.accompanist}"
+    private const val accPager = "com.google.accompanist:accompanist-pager:${Versions.accompanist}"
+    private const val accPagerInd =
+        "com.google.accompanist:accompanist-pager-indicators:${Versions.accompanist}"
 
     // Retrofit & Moshi
     private const val retrofit = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
@@ -72,6 +75,8 @@ object AppDependencies {
         add(composeLiveData)
         add(accSys)
         add(accInsets)
+        add(accPager)
+        add(accPagerInd)
     }
 
     val compilerLibraries = arrayListOf<String>().apply {
