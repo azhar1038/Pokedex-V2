@@ -5,7 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
@@ -17,8 +20,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.az.pokedex.model.remote.ResponsePokemon
 import com.az.pokedex.R
+import com.az.pokedex.model.remote.ResponsePokemon
 import com.az.pokedex.utils.Resource
 import com.az.pokedex.utils.parseName
 import com.google.accompanist.coil.rememberCoilPainter
@@ -35,7 +38,7 @@ fun PokemonDetailView(
 ) {
     val pokemon = produceState<Resource<ResponsePokemon>>(
         initialValue = Resource.Loading()
-    ){
+    ) {
         value = viewModel.getPokemonInfo(pokemonId)
     }.value
 
@@ -52,7 +55,7 @@ fun PokemonDetailView(
                 )
             )
             .systemBarsPadding()
-    ){
+    ) {
         Icon(
             painterResource(id = R.drawable.ic_pokeball),
             contentDescription = null,
@@ -62,11 +65,10 @@ fun PokemonDetailView(
                 .align(Alignment.TopEnd)
                 .offset(40.dp, (50).dp)
         )
-        when(pokemon){
+        when (pokemon) {
             is Resource.Success -> {
                 PokemonDetail(
                     pokemon = pokemon.data!!,
-                    background = Color(dominantColor),
                     onBackground = Color(dominantOnColor)
                 )
             }
@@ -87,17 +89,16 @@ fun PokemonDetailView(
 @Composable
 fun PokemonDetail(
     pokemon: ResponsePokemon,
-    background: Color,
     onBackground: Color,
 ) {
-    Box{
-        Column{
+    Box {
+        Column {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(300.dp)
                     .padding(24.dp)
-            ){
+            ) {
                 Row(
                     verticalAlignment = Alignment.Top
                 ) {
@@ -127,7 +128,7 @@ fun PokemonDetail(
                                 onBackground.copy(0.2f),
                                 shape = CircleShape
                             )
-                    ){
+                    ) {
                         Text(
                             type.type.name.replaceFirstChar { it.uppercaseChar() },
                             color = onBackground,
@@ -148,8 +149,8 @@ fun PokemonDetail(
                             topEnd = 24.dp
                         )
                     )
-            ){
-                Column{
+            ) {
+                Column {
                     Spacer(Modifier.height(40.dp))
                     DetailTabs(pokemon)
                 }

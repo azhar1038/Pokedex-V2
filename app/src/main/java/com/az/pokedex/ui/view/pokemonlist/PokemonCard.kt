@@ -38,7 +38,7 @@ fun PokemonCard(
     onPressed: () -> Unit = {},
 ) {
     val background by animateColorAsState(
-        if(dominantColor != null) Color(dominantColor.background) else defaultBackground,
+        if (dominantColor != null) Color(dominantColor.background) else defaultBackground,
         tween(
             durationMillis = 300,
             easing = LinearOutSlowInEasing
@@ -46,7 +46,7 @@ fun PokemonCard(
     )
 
     val onBackground by animateColorAsState(
-        if(dominantColor != null) Color(dominantColor.onBackground) else defaultOnBackground,
+        if (dominantColor != null) Color(dominantColor.onBackground) else defaultOnBackground,
         tween(
             durationMillis = 300,
             easing = LinearOutSlowInEasing

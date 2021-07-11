@@ -119,7 +119,7 @@ fun TopBar(
 
         IconButton(
             onClick = {
-                if(isSearchActive){
+                if (isSearchActive) {
                     searchText = ""
                     onChange("")
                 }

@@ -4,10 +4,8 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
@@ -18,7 +16,8 @@ import com.az.pokedex.model.DominantColor
 import com.az.pokedex.model.PokemonProfile
 import com.az.pokedex.repository.pokemon.PokemonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -46,13 +45,13 @@ class PokemonListViewModel @Inject constructor(
         }
     }
 
-    fun search(text: String){
+    fun search(text: String) {
         val match = text.lowercase()
         searchText.value = match
         searchActive.value = match.isNotEmpty()
         val newFilter = mutableListOf<Int>()
-        pokemonList.value.forEachIndexed{ index, pokemon ->
-            if(pokemon.name.contains(match)){
+        pokemonList.value.forEachIndexed { index, pokemon ->
+            if (pokemon.name.contains(match)) {
                 newFilter.add(index)
             }
         }
@@ -60,13 +59,13 @@ class PokemonListViewModel @Inject constructor(
     }
 
     suspend fun calculateDominantColor(context: Context, index: Int) {
-        if(dominantColor[index].value != null) return
+        if (dominantColor[index].value != null) return
 
         val request = ImageRequest.Builder(context)
             .data(pokemonList.value[index].imageUrl)
             .build()
 
-        val d: Drawable? = when(val result = Coil.execute(request)){
+        val d: Drawable? = when (val result = Coil.execute(request)) {
             is SuccessResult -> result.drawable
             else -> null
         }

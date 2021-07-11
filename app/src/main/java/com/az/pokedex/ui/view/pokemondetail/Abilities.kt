@@ -10,7 +10,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -29,7 +28,7 @@ fun Ability(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp, vertical = 8.dp,)
+            .padding(horizontal = 24.dp, vertical = 8.dp)
             .background(background, CircleShape)
             .padding(vertical = 12.dp)
     ) {
@@ -51,7 +50,7 @@ fun Abilities(
         modifier = modifier
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 24.dp)
-    ){
+    ) {
         Spacer(Modifier.height(24.dp))
         pokemon.abilities.forEach {
             Ability(

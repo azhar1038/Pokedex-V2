@@ -13,12 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.az.pokedex.model.remote.ResponsePokemon
 import com.az.pokedex.utils.parseStatToAbbr
-import com.az.pokedex.utils.parseStatToColor
 
 @Composable
 fun Stat(
@@ -55,7 +53,7 @@ fun Stat(
     ) {
         Box(
             Modifier.width(60.dp)
-        ){
+        ) {
             Text(
                 name,
                 fontWeight = FontWeight.Bold,
@@ -77,7 +75,7 @@ fun Stat(
         Box(
             contentAlignment = Alignment.CenterEnd,
             modifier = Modifier.width(40.dp)
-        ){
+        ) {
             Text(
                 (curPercent.value * maxValue).toInt().toString(),
                 fontWeight = FontWeight.Bold,
