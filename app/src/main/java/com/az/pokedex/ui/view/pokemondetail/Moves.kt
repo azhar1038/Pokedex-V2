@@ -83,7 +83,10 @@ fun Moves(
                             .background(MaterialTheme.colors.onSurface.copy(0.3f), CircleShape)
                             .padding(horizontal = 8.dp, vertical = 4.dp)
                     ) {
-                        Text(parseName(it.move.name))
+                        Text(
+                            parseName(it.move.name),
+                            color = MaterialTheme.colors.onSurface
+                        )
                     }
                 }
             }

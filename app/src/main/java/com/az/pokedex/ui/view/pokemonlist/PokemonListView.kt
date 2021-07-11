@@ -1,9 +1,11 @@
 package com.az.pokedex.ui.view.pokemonlist
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -16,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.az.pokedex.R
+import com.google.accompanist.insets.systemBarsPadding
 import kotlin.math.ceil
 
 @Composable
@@ -27,7 +30,11 @@ fun PokemonListView(
 
     val scrollState = rememberLazyListState()
 
-    Column {
+    Column(
+        modifier = Modifier
+            .background(MaterialTheme.colors.surface)
+            .systemBarsPadding()
+    ) {
         TopBar(
             searchHint = "Search among ${viewModel.pokemonList.value.size} pokemons",
             initialSearchText = viewModel.searchText.value,

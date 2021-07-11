@@ -97,7 +97,7 @@ fun TopBar(
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color(0xffeeeeee), shape = CircleShape)
+                    .background(Color(0x55aaaaaa), shape = CircleShape)
                     .padding(
                         start = 20.dp,
                         top = 16.dp,
@@ -131,7 +131,8 @@ fun TopBar(
         ) {
             Icon(
                 if (!isSearchActive) Icons.Filled.Search else Icons.Filled.Clear,
-                contentDescription = "Search button"
+                contentDescription = "Search button",
+                tint = MaterialTheme.colors.onSurface
             )
         }
     }

@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import com.az.pokedex.ui.Pokedex
 import com.az.pokedex.ui.theme.PokedexTheme
+import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,15 +24,17 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             val systemUiController = rememberSystemUiController()
-            val useDarkIcons = MaterialTheme.colors.isLight
+            val useDarkIcons = false//MaterialTheme.colors.isLight
             SideEffect {
                 systemUiController.setSystemBarsColor(
                     color = Color.Transparent,
                     darkIcons = useDarkIcons,
                 )
             }
-            PokedexTheme {
-                Pokedex()
+            PokedexTheme(darkTheme = true) {
+                ProvideWindowInsets {
+                    Pokedex()
+                }
             }
         }
     }

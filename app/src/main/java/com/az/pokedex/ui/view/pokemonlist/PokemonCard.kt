@@ -62,8 +62,8 @@ fun PokemonCard(
             .background(
                 Brush.verticalGradient(
                     listOf(
-                        background,
-                        background.copy(0.7f)
+                        background.copy(0.7f),
+                        background.copy(0.4f)
                     )
                 )
             )

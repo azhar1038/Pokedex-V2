@@ -56,7 +56,11 @@ fun Stat(
         Box(
             Modifier.width(60.dp)
         ){
-            Text(name, fontWeight = FontWeight.Bold)
+            Text(
+                name,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colors.onSurface,
+            )
         }
         Box(
             modifier = modifier.weight(1f)
@@ -77,6 +81,7 @@ fun Stat(
             Text(
                 (curPercent.value * maxValue).toInt().toString(),
                 fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colors.onSurface,
             )
         }
     }

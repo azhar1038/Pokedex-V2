@@ -18,6 +18,8 @@ object AppDependencies {
     private const val accCoil = "com.google.accompanist:accompanist-coil:${Versions.accompanist}"
     private const val accSys =
         "com.google.accompanist:accompanist-systemuicontroller:${Versions.accompanist}"
+    private const val accInsets =
+        "com.google.accompanist:accompanist-insets:${Versions.accompanist}"
 
     // Retrofit & Moshi
     private const val retrofit = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
@@ -69,6 +71,7 @@ object AppDependencies {
         add(roomRuntime)
         add(composeLiveData)
         add(accSys)
+        add(accInsets)
     }
 
     val compilerLibraries = arrayListOf<String>().apply {

@@ -36,7 +36,8 @@ fun AboutColumn(
         Text(
             text,
             fontSize = 24.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colors.onSurface,
         )
     }
 }
