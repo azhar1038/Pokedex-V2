@@ -34,16 +34,13 @@ class DefaultPokemonRepository @Inject constructor(
                     } catch (e: Exception) {
                         localCount
                     }
-                    Log.i("TAG", "PokemonRepository: $localCount $remoteCount")
                     val limit = remoteCount - localCount
                     if (limit > 0) {
                         try {
-                            Log.i("TAG", "PokemonRepository: Fetching")
                             val response = pokeApi.getPokemonList(limit, localCount)
                             val pokemons: List<PokemonProfile> = response.results.map {
                                 it.asPokemonProfile()
                             }
-                            Log.i("TAG", "PokemonRepository: Inserting")
                             pokemonDao.insertAll(pokemons)
                         } catch (e: Exception) {
                             Log.i("TAG", "getPokemonList: Failed to fetch data")
