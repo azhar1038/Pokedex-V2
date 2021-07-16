@@ -16,6 +16,7 @@ import coil.request.SuccessResult
 import com.az.pokedex.model.DominantColor
 import com.az.pokedex.model.PokemonProfile
 import com.az.pokedex.repository.pokemon.PokemonRepository
+import com.az.pokedex.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -26,22 +27,38 @@ import javax.inject.Inject
 class PokemonListViewModel @Inject constructor(
     pokemonRepository: PokemonRepository
 ) : ViewModel() {
-    private val _pokemonList: Flow<List<PokemonProfile>> = pokemonRepository.getPokemonList()
+    private val _pokemonList: Flow<Resource<List<PokemonProfile>>> = pokemonRepository.getPokemonList()
 
     val pokemonList = mutableStateOf<List<PokemonProfile>>(listOf())
     val filterList = mutableStateOf<List<Int>>(listOf())
     var dominantColor = listOf<MutableState<DominantColor?>>()
 
+    var isLoading = mutableStateOf(true)
     var searchText = mutableStateOf("")
     var searchActive = mutableStateOf(false)
 
     init {
         viewModelScope.launch {
-            pokemonRepository.refreshPokemonList()
+//            pokemonRepository.refreshPokemonList()
             _pokemonList.collect {
-                pokemonList.value = it
-                filterList.value = (pokemonList.value.indices).toList()
-                dominantColor = pokemonList.value.map { mutableStateOf(null) }
+                when(it){
+                    is Resource.Success -> {
+                        Log.i("TAG", "PokemonList: Success")
+                        pokemonList.value = it.data!!
+                        filterList.value = (pokemonList.value.indices).toList()
+                        dominantColor = pokemonList.value.map { mutableStateOf(null) }
+                        isLoading.value = false
+                    }
+                    is Resource.Loading -> {
+                        Log.i("TAG", "PokemonList: Loading...")
+                        isLoading.value = true
+                    }
+                    is Resource.Error -> {
+                        Log.i("TAG", "PokemonList: Error!!!")
+                        isLoading.value = false
+                    }
+                }
+
             }
         }
     }

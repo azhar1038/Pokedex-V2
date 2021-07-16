@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.az.pokedex.R
+import com.az.pokedex.model.DominantColor
 import com.az.pokedex.model.remote.ResponsePokemon
 import com.az.pokedex.utils.Resource
 import com.az.pokedex.utils.parseName
@@ -73,7 +74,13 @@ fun PokemonDetailView(
                 )
             }
             is Resource.Error -> {
-                Text("Error")
+                Text(
+                    "Unable to load Data",
+                    color = Color.White,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.align(Alignment.Center)
+                )
             }
             is Resource.Loading -> {
                 CircularProgressIndicator(

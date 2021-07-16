@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -42,7 +43,17 @@ fun PokemonListView(
         ) {
             viewModel.search(it)
         }
-        if (viewModel.filterList.value.isNotEmpty()) {
+        if (viewModel.isLoading.value){
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxSize()
+            ){
+                CircularProgressIndicator(
+                    color = MaterialTheme.colors.onSurface
+                )
+            }
+        }
+        else if (viewModel.filterList.value.isNotEmpty()) {
             LazyColumn(
                 state = scrollState
             ) {
