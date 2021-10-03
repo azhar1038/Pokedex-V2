@@ -2,7 +2,7 @@
 Help in improving the Pokedex and participate in hactoberfest!  
 If you find any bug or can improve the UI and animations of the app, feel free to open a PR.
 
-If your PR is good enough and doesn't causes any conflict, it will be merged. Once it has been merged you can check your status in Hacktoberfest page.
+If your PR is good enough and doesn't causes any conflict, it will be merged. Once it has been merged you can check your status in [Hacktoberfest 2021](https://hacktoberfest.digitalocean.com/) page.
 
 # Pokedex-V2
 Pokedex App for Android, made using [Jetpack Compose](https://developer.android.com/jetpack/compose)  
