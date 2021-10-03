@@ -1,3 +1,8 @@
+# Hacktoberfest 2021
+Help in improving the Pokedex and participate in hactoberfest!  
+
+If you find any bug or can improve the UI and animations of the app, feel free to open a PR.
+
 # Pokedex-V2
 Pokedex App for Android, made using [Jetpack Compose](https://developer.android.com/jetpack/compose)  
 Api used - [Poke API](https://pokeapi.co/)
